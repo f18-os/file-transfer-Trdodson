@@ -62,11 +62,11 @@ except FileNotFoundError:                           # Let the user know if it fa
     s.send(msg)                                     # Let the server know that something went wrong.
     s.close()
     exit()
-                                                     
-while(line):                                         # Start reading.
-    line = myFile.read(100)
+    
+line = myFile.read(100)
+while(line):                                         # Start reading
     s.send(line)                                     # Send each line to the server.
-    #line = myFile.read(100)
+    line = myFile.read(100)
 print("Sent %s." % fileName)
 myFile.close()
 print("Closing %s" %s)

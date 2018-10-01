@@ -36,7 +36,7 @@ if (data == b"ERROR"):                                          # Client sent an
     print("ERROR: Something went wrong client-side. Exiting...")
     sock.close()
     exit()
-    
+
 with open('payload.txt', 'wb') as myFile:                       # Otherwise, open a file to copy payload to.
     while True:                                                  
         myFile.write(data)                                      # Read the data sent by the client and copy to the file.

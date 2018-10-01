@@ -1,7 +1,6 @@
 # Collaborations
 
-*
-https://www.bogotobogo.com/python/python_network_programming_server_client_file_transfer.php:
+* https://www.bogotobogo.com/python/python_network_programming_server_client_file_transfer.php:
 this sample code in the first example given on this page allowed me to realize
 that, when sending a file to the server, you're (in layman's terms) sending
 the file line by line: hence, I understand that the client reads a line, sends
@@ -15,4 +14,6 @@ server's side.
   sockets, management of parameters (framedClient), and some syntax regarding
   sending and recieving and sending data (framedSock).
 
-
+* Jake Lasley and Jorge Ramirez helped with the client sending and the server
+  recieving only 100 bytes at a time - specifically, with the lines
+  sock.recv(100) and line = myFile.read(100).
