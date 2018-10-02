@@ -18,6 +18,7 @@ switchesVarDefaults = (
 progname = "fileClient"
 paramMap = params.parseParams(switchesVarDefaults)
 
+global debug
 server, usage, debug, fileName  = paramMap["server"], paramMap["usage"], paramMap["debug"], paramMap["file"]
 
 if usage:
@@ -58,14 +59,15 @@ try:                                                # Try to open the file.
     myFile = open(fileName, 'rb')
 except FileNotFoundError:                           # Let the user know if it fails and exit.
     print("ERROR: File doesn't exist! Exiting...")
-    msg = b"ERROR"
-    s.send(msg)                                     # Let the server know that something went wrong.
     s.close()
     exit()
-    
+
+from framedSock import framedSend
+
 line = myFile.read(100)
+print("type(line)=", type(line))
 while(line):                                         # Start reading
-    s.send(line)                                     # Send each line to the server.
+    framedSend(s, line, debug)                       # Send each line to the server.
     line = myFile.read(100)
 print("Sent %s." % fileName)
 myFile.close()

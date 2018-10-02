@@ -11,7 +11,7 @@ server's side.
 * Dr. Fruedenthal's framed-echo demo files, including framedClient.py,
   framedServer.py, and framedSock.py, were the baseline for these
   programs. Few modifications were made as far as opening and connecting the
-  sockets, management of parameters (framedClient), and some syntax regarding
+  sockets, management of parameters (framedClient), and the framing of
   sending and recieving and sending data (framedSock).
 
 * Jake Lasley and Jorge Ramirez helped with the client sending and the server
