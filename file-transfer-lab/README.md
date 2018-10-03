@@ -7,7 +7,8 @@ To transfer a file:
 * Start the client upload. To upload a certain file, enter "./fileClient.py -f
 FILENAME" into the terminal. In order for the upload to commence, the file
 must already exist.
-* The file will be uploaded to the server under the name "payload.txt"
+* The file will be uploaded to the /server folder by the server. If the file
+already exists in this folder, the program will terminate without uploading.
 
 ## Refrences
 
