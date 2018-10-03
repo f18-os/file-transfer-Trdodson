@@ -34,7 +34,13 @@ print("connection rec'd from", addr)
 
 from framedSock import framedReceive
 
+checkRecv = framedReceive(sock, debug)
+while checkRecv != b'':
+    fileName = checkRecv
+    checkRecv = framedReceive(sock, debug)
 
+print(fileName)
+    
 data = framedReceive(sock,debug)                                           # Check out the data client sent.
 if (data == b"ERROR"):                                          # Client sent an error - stop!
     print("ERROR: Something went wrong client-side. Exiting...")

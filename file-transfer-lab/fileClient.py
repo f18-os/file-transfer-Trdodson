@@ -64,6 +64,9 @@ except FileNotFoundError:                           # Let the user know if it fa
 
 from framedSock import framedSend
 
+framedSend(s, fileName.encode(), debug)
+framedSend(s,b"", debug)
+
 line = myFile.read(100)
 print("type(line)=", type(line))
 while(line):                                         # Start reading
