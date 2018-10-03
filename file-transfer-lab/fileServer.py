@@ -28,47 +28,53 @@ lsock.bind(bindAddr)
 lsock.listen(5)
 print("listening on:", bindAddr)
 
-sock, addr = lsock.accept()
+while True:
+    
+    sock, addr = lsock.accept()
+    print("connection rec'd from", addr)
 
-print("connection rec'd from", addr)
+    from framedSock import framedReceive, framedSend
 
-from framedSock import framedReceive, framedSend
+    if not os.fork():
+        
+        print("Child handling connection", addr)
+        
+        checkRecv = framedReceive(sock, debug)
+        if checkRecv == b"ERROR":
+            print("Something went wrong client-side. Exiting...")
+            sock.close()
+            sys.exit(0)
 
-checkRecv = framedReceive(sock, debug)
+        while checkRecv != b'':
+            fileName = checkRecv.decode("utf-8")                        # Pull out the file name!
+            checkRecv = framedReceive(sock, debug)                                   
 
-if checkRecv == b"ERROR":
-    print("Something went wrong client-side. Exiting...")
-    sock.close()
-    exit()
+        filePath = os.getcwd() + "/server/" + fileName                  # Get path; server uploads fle to server folder.
 
-while checkRecv != b'': 
-    fileName = checkRecv.decode("utf-8")                        # Pull out the file name!
-    checkRecv = framedReceive(sock, debug)                                   
+        if os.path.isfile(filePath):
+            print("ERROR: File already exists.")
+            framedSend(sock, b"exists", debug)
+            sock.close()
+            sys.exit(0)
+        else:
+            framedSend(sock,b"accept", debug)
+            
+        data = framedReceive(sock,debug)                                # Check out the data client sent.
 
-filePath = os.getcwd() + "/server/" + fileName                  # Get path; server uploads fle to server folder.
-
-if os.path.isfile(filePath):
-    print("ERROR: File already exists.")
-    framedSend(sock, b"exists", debug)
-    sock.close()
-    exit()
-else:
-    framedSend(sock,b"accept", debug)
-
-data = framedReceive(sock,debug)                                # Check out the data client sent.
-if (data == b"ERROR"):                                          # Client sent an error - stop!
-    print("ERROR: Something went wrong client-side. Exiting...")
-    sock.close()
-    exit()
-
-with open(filePath, 'wb') as myFile:                            # Otherwise, open a file to copy payload to.
-    while True:                                                  
-        myFile.write(data)                                      # Read the data sent by the client and copy to the file.
-        data = framedReceive(sock, debug)                                   
-        if not data:                                            # When there's nothing more, stop taking payload.
-            break
-myFile.close()
-print("%s received. Exiting..." % fileName)
-sock.close()
-print("Closed connection.")
+        if (data == b"ERROR"):                                          # Client sent an error - stop!
+            print("ERROR: Something went wrong client-side. Exiting...")
+            sock.close()
+            sys.exit(0)
+            
+        with open(filePath, 'wb') as myFile:                            # Otherwise, open a file to copy payload to.
+            while True:
+                myFile.write(data)                  # Read the data sent by the client and copy to the file.
+                data = framedReceive(sock, debug)
+                if not data:                        # When there's nothing more, stop taking payload.
+                    break
+        myFile.close()
+        print("%s received. Exiting..." % fileName)
+        sock.close()
+        print("Closed connection.")
+        sys.exit(0)
 
