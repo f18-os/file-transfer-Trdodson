@@ -7,8 +7,13 @@ To transfer a file:
 * Start the client upload. To upload a certain file, enter "./fileClient.py -f
 FILENAME" into the terminal. In order for the upload to commence, the file
 must already exist.
+~~~
+* To change the socket, use -s addr:socket
+* The client should still be able to upload through the given stammer proxy.
+~~~
 * The file will be uploaded to the /server folder by the server. If the file
-already exists in this folder, the program will terminate without uploading.
+already exists in this folder, the client will be notified and the file will
+not upload.
 
 ## Refrences
 

@@ -18,6 +18,7 @@ switchesVarDefaults = (
 progname = "fileClient"
 paramMap = params.parseParams(switchesVarDefaults)
 
+# Parse the parameters for the values.
 server, usage, debug, fileName  = paramMap["server"], paramMap["usage"], paramMap["debug"], paramMap["file"]
 
 if usage:
@@ -31,6 +32,8 @@ except:
     sys.exit(1)
 
 s = None
+
+# Get the socket open.
 for res in socket.getaddrinfo(serverHost, serverPort, socket.AF_UNSPEC, socket.SOCK_STREAM):
     af, socktype, proto, canonname, sa = res
     try:
@@ -67,20 +70,20 @@ except FileNotFoundError:                           # Let the user know if it fa
     exit()
 
 try:
-    framedSend(s, fileName.encode(), debug)              # Send the server the file's name.
-    framedSend(s,b"", debug)                             # Server knows to stop getting name when it gets empty byte array
+    framedSend(s, fileName.encode(), debug)             # Send the server the file's name.
+    framedSend(s,b"", debug)                            # Send empty byte array to tell server when it has the file name.
 
-    checkRecv = framedReceive(s,debug)
+    checkRecv = framedReceive(s,debug)                  # Client listens to server for notifications or errors.
     
-    if checkRecv == b"exists":             # Server tells client file is already uploaded. Stop!
+    if checkRecv == b"exists":                          # Server tells client file is already uploaded. Stop!
         print("ERROR: File already on server. Exiting...")
         s.close()
         exit()
-    else:                                  # Otherwise, continiue.
+    else:                                                # Otherwise, continiue.
         print("Success! Sending file.")
     
     line = myFile.read(100)
-    while(line):                                         # Start reading
+    while(line):                                         # Start reading file.
         framedSend(s, line, debug)                       # Send each line to the server.
         line = myFile.read(100)
     print("Sent %s." % fileName)
