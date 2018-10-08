@@ -16,6 +16,9 @@ must already exist.
 already exists in this folder, the client will be notified and the file will
 not upload.
 
+## Bugs
+* Client-initiated server kill command is still non-functional.
+
 ## Refrences
 
 This assignment was prepared in a manner consistent with the instructor's
