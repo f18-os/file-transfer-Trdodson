@@ -65,7 +65,7 @@ try:
         myFile = open(fileName, 'rb')
     except FileNotFoundError:                           # Let the user know if it fails and check for exit prompt.
         print("WARNING: File doesn't exist! Checking for exit prompt...")
-        if fileName == "exit":                          # Check for server termination.
+        if fileName == "exit":                          # Check for server termination. Supposed to kill server, doesn't work!
             print("Exit prompt detected. Terminating server and shutting down...")
             framedSend(s, b"exit", debug)
             s.close()

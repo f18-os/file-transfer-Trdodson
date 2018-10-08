@@ -28,8 +28,6 @@ lsock.bind(bindAddr)
 lsock.listen(5)
 print("listening on:", bindAddr)
 
-checkRecv = "T"                                    # Variable for checking for special messages from the client (like errors).
-
 while True:
     
     sock, addr = lsock.accept()                    # Keep accepting connections.
