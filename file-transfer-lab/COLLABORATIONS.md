@@ -18,3 +18,7 @@ server's side.
 * Jake Lasley and Jorge Ramirez helped with the client sending and the server
   recieving only 100 bytes at a time - specifically, with the lines
   sock.recv(100) and line = myFile.read(100).
+
+* Discussed multiple client support with Noa Dodson by explaining
+  framedForkServer.py. Discussed how to send and recieve file contents line by
+  line.

@@ -58,18 +58,23 @@ if s is None:
     sys.exit(1)
 
 print("Connected. Trying to open file...")
-    
-from framedSock import framedSend, framedReceive
 
-try:                                                # Try to open the file.
-    myFile = open(fileName, 'rb')
-except FileNotFoundError:                           # Let the user know if it fails and exit.
-    print("ERROR: File doesn't exist! Exiting...")
-    framedSend(s, b"ERROR", debug)
-    s.close()
-    exit()
+try:                                                    
+    from framedSock import framedSend, framedReceive
+    try:                                                # Try to open the file.
+        myFile = open(fileName, 'rb')
+    except FileNotFoundError:                           # Let the user know if it fails and check for exit prompt.
+        print("WARNING: File doesn't exist! Checking for exit prompt...")
+        if fileName == "exit":                          # Check for server termination.
+            print("Exit prompt detected. Terminating server and shutting down...")
+            framedSend(s, b"exit", debug)
+            s.close()
+            exit()
+        print("ERROR: no exit prompt. Exiting...")
+        framedSend(s, b"ERROR", debug)
+        s.close()
+        exit()
 
-try:
     framedSend(s, fileName.encode(), debug)             # Send the server the file's name.
     framedSend(s,b"", debug)                            # Send empty byte array to tell server when it has the file name.
 

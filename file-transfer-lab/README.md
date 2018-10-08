@@ -10,6 +10,7 @@ must already exist.
 ~~~
 * To change the socket, use -s addr:socket
 * The client should still be able to upload through the given stammer proxy.
+* To terminate the server, enter Ctr-C Ctrl-C into the server's terminal.
 ~~~
 * The file will be uploaded to the /server folder by the server. If the file
 already exists in this folder, the client will be notified and the file will
