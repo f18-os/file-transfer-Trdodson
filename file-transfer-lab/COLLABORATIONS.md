@@ -22,3 +22,5 @@ server's side.
 * Discussed multiple client support with Noa Dodson by explaining
   framedForkServer.py. Discussed how to send and recieve file contents line by
   line.
+
+* Based threadServer.py on code from threads.v1,py by Dr. Freudenthal; still non-functional!

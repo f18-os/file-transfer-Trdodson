@@ -94,7 +94,7 @@ try:
     print("Sent %s." % fileName)
     myFile.close()
     print("Closing connection.")
-except BrokenPipeError:                                 # If something server-side stops or breaks, fail gracefully
+except:                                                  # If something server-side stops or breaks, fail gracefully
     print("Server broke connection. Exiting...")
 s.close()
 exit()
